@@ -5,13 +5,9 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const Logs = require("./logModel")
-const {Random} = "./random.js" 
-// const Login = require("./models/loginModel")
 
-const mongoose = require("mongoose");
 const Joi = require("joi");
 // const router = express.Router();
-const bcrypt = require("bcrypt");
 require('dotenv').config({ path: "./.env"})
 app.use(express.json());
 app.use(cookieParser());
@@ -31,9 +27,9 @@ const newRegistrationEntry = Joi.object({
       .max(100)
       .required(),
       password: Joi.string()
-      .min(6)
+      .min(8)
       .required()
-      .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/)
+      .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
     });
     
     function validateNewRegisterEntry(req, res, next) {
@@ -47,3 +43,6 @@ const newRegistrationEntry = Joi.object({
     }
     next();
 }
+
+const signUpMiddle = { validateNewRegisterEntry };
+module.exports = signUpMiddle;

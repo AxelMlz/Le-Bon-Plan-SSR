@@ -3,6 +3,14 @@ const handlebars = require("express-handlebars");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const app = express();
+require('dotenv').config({ path: "../../.env"})
+const bcrypt = require("bcrypt");
+
+app.use(express.json());
+const mongoose = require("mongoose");
+const Logs = require("./logModel")
+const userRouter = require("./Routes/userRouter")
+app.use("/signup", userRouter)
 
 // Handlebars config
 app.engine("handlebars", handlebars.engine());
@@ -14,6 +22,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/public")));
 // body du form de login
 app.use(express.urlencoded({ extended: true }));
+
+mongoose
+	.connect(
+		process.env.MONGO_URI,
+		{
+			useNewUrlParser: true,
+		}
+	)
+	.then(() => console.log("Connected to MongoDB"));
 
 // Routes
 app.get("/", (req, res) => {
