@@ -1,28 +1,18 @@
 const mongoose = require("mongoose");
 
 const logSchema = new mongoose.Schema({
-    heroName: {
+    email: {
         type: String,
         required: true,
         maxLength: 30,
+        unique: true,
     },
-    power: {
-        type: Array,
-        required: true,
-    },
-    color: {
+    password: {
         type: String,
         required: true,
-        maxLength: 30,
-    },
-    isAlive:{ 
-        type: Boolean,
-        required: true,
-    },
-    age: {
-        type: Number,
-        required: true
-    },
+        minLength: 8,
+        maxLength : 50
+    }
 })
 
 const Logs = mongoose.model("Logs", logSchema);
